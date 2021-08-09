@@ -1,15 +1,52 @@
 let audioContext;
+let bufferArray = [];
+let time;
+let scheduler;
+let getBuffer = [0,0];
+let index = 1;
+let logging = true;
 
 function loadAndPlayData(){
-    console.log("YEAAH");
+    if (audioContext === undefined || audioContext === null) {
+        createWebAudioAPI();
+    }
+    loadSound(0);
+    time = performance.now();
+    mainLoopTimer = setTimeout(mainLoop, 100);
 }
 
 function createWebAudioAPI() {
     AudioContext = window.AudioContext || window.webkitAudioContext;
     audioContext = new AudioContext({ sampleRate: 44100 });
-    silence.play();
-    if (verboseFlagAPI) {
-        console.log("API HAS BEEN MADE");
-        console.log(audioContext);
+    if(logging) console.log(audioContext);
+}
+
+function mainLoop(){
+    scheduler = performance.now() - time;
+    mainLoopTimer = setTimeout(mainLoop, 100);
+    if(scheduler > 5000 && !getBuffer[index])
+    {
+        getBuffer[index] = 1;
+        if(logging) console.log("Load buffer " + index);
+        loadSound(index);
     }
+    if(scheduler > 8000){
+        index = (index+1)%2;
+        bufferArray[index].stop();
+        if(logging) console.log("Stop buffer "+ index);
+        getBuffer[index] = 0;
+        time = performance.now();
+    }
+}
+
+function stop(){
+    clearTimeout(mainLoopTimer);
+    try{
+        bufferArray[0].stop();
+        bufferArray[1].stop();
+    }
+    catch(e){
+
+    }
+    getBuffer = [0,0];
 }
