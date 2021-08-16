@@ -24,13 +24,13 @@ function createWebAudioAPI() {
 function mainLoop(){
     scheduler = performance.now() - time;
     mainLoopTimer = setTimeout(mainLoop, 100);
-    if(scheduler > 5000 && !getBuffer[index])
+    if(scheduler > 4000 && !getBuffer[index])
     {
         getBuffer[index] = 1;
         if(logging) console.log("Load buffer " + index);
         loadSound(index);
     }
-    if(scheduler > 8000){
+    if(scheduler > 11000){
         index = (index+1)%2;
         bufferArray[index].stop();
         if(logging) console.log("Stop buffer "+ index);
