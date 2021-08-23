@@ -2,11 +2,11 @@ function loadSound(playerIndex) {
 	document.getElementById("xhr").style.display = "block";
 	let getSound = new XMLHttpRequest(); // Load the Sound with XMLHttpRequest
 	let url;
-	if (index){
-		url = "https://www.evdh.net/tones/mp3-320kb/2006-03-27T00.mp3";
+	if (playerIndex){
+		url = "https://www.evdh.net/tones/mp3-320kb/2006-03-27T04.mp3";
 	}
 	else {
-		url = "https://www.evdh.net/tones/mp3-320kb/2006-03-27T04.mp3";
+		url = "https://www.evdh.net/tones/mp3-320kb/2006-03-27T00.mp3";
 	}
 	getSound.open("GET", url, true); // Path to Audio File
 	getSound.responseType = "arraybuffer"; // Read as Binary Data
