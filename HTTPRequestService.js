@@ -1,7 +1,14 @@
 function loadSound(playerIndex) {
 	document.getElementById("xhr").style.display = "block";
 	let getSound = new XMLHttpRequest(); // Load the Sound with XMLHttpRequest
-	getSound.open("GET", "https://www.evdh.net/tones/noise1.mp3", true); // Path to Audio File
+	let url;
+	if (index){
+		url = "https://www.evdh.net/tones/mp3-320kb/2006-03-27T00.mp3";
+	}
+	else {
+		url = "https://www.evdh.net/tones/mp3-320kb/2006-03-27T04.mp3";
+	}
+	getSound.open("GET", url, true); // Path to Audio File
 	getSound.responseType = "arraybuffer"; // Read as Binary Data
 	getSound.onload = function () {
 		document.getElementById("xhr").style.display = "none";
@@ -9,9 +16,9 @@ function loadSound(playerIndex) {
 		document.getElementById("decode").style.display = "block";
 		audioContext.decodeAudioData(getSound.response, function (buffer) {
 			document.getElementById("decode").style.display = "none";
-            setTimeout( function () {loadSampleInBufferAndPlay(buffer, playerIndex);}, 2000);
+            setTimeout( function () {loadSampleInBufferAndPlay(buffer, playerIndex);}, 1500);
 		});
-		}, 2000);
+		}, 1500);
 	};
 	getSound.send(); // Send the Request and Load the File
 }
@@ -22,7 +29,11 @@ function loadSampleInBufferAndPlay(buffer, playerIndex){
     playSound.connect(audioContext.destination);
 	playSound.buffer = buffer; // Attatch our Audio Data as it's Buffer
 	bufferArray[playerIndex] = playSound; //Put the buffer in buffersArray
-    bufferArray[playerIndex].start();
 	setTimeout( function () {document.getElementById("buffer").style.display = "none"}, 50);
-    if(logging) console.log("Start buffer " + playerIndex);
+	setTimeout( function () {
+		document.getElementById("start").style.display = "block";
+		if(logging) console.log("Start buffer " + playerIndex);
+		bufferArray[playerIndex].start();
+		setTimeout( function () {document.getElementById("start").style.display = "none"}, 50);
+	}, 1500);
 }
