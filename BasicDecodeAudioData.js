@@ -5,6 +5,7 @@ let scheduler;
 let getBuffer = [0,0];
 let index = 1;
 let logging = true;
+let gainNode = []
 
 function loadAndPlayData(){
     if (audioContext === undefined || audioContext === null) {
@@ -19,6 +20,12 @@ function createWebAudioAPI() {
     AudioContext = window.AudioContext || window.webkitAudioContext;
     audioContext = new AudioContext({ sampleRate: 44100 });
     if(logging) console.log(audioContext);
+    gainNode[0] = audioContext.createGain();
+    gainNode[0].gain.setValueAtTime(0.5, audioContext.currentTime);
+    gainNode[0].connect(audioContext.destination)
+    gainNode[1] = audioContext.createGain();
+    gainNode[1].gain.setValueAtTime(0.5, audioContext.currentTime);
+    gainNode[1].connect(audioContext.destination)
 }
 
 function mainLoop(){

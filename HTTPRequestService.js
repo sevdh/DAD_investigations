@@ -26,7 +26,7 @@ function loadSound(playerIndex) {
 function loadSampleInBufferAndPlay(buffer, playerIndex){
 	document.getElementById("buffer").style.display = "block";
 	let playSound = audioContext.createBufferSource(); // Declare a New Sound
-    playSound.connect(audioContext.destination);
+    playSound.connect(gainNode[playerIndex]);
 	playSound.buffer = buffer; // Attatch our Audio Data as it's Buffer
 	bufferArray[playerIndex] = playSound; //Put the buffer in buffersArray
 	setTimeout( function () {document.getElementById("buffer").style.display = "none"}, 50);
