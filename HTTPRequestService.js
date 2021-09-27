@@ -3,10 +3,10 @@ function loadSound(playerIndex) {
 	let getSound = new XMLHttpRequest(); // Load the Sound with XMLHttpRequest
 	let url;
 	if (playerIndex){
-		url = "https://www.evdh.net/tones/mp3-320kb/2006-03-27T04.mp3";
+		url = "https://www.evdh.net/tones/2006-03-27T04.m4a";
 	}
 	else {
-		url = "https://www.evdh.net/tones/mp3-320kb/2006-03-27T00.mp3";
+		url = "https://www.evdh.net/tones/2006-03-27T00.m4a";
 	}
 	getSound.open("GET", url, true); // Path to Audio File
 	getSound.responseType = "arraybuffer"; // Read as Binary Data
